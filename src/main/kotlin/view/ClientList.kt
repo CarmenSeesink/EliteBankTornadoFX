@@ -4,6 +4,7 @@ import controller.ClientController
 import models.Client
 import models.ClientModel
 import javafx.stage.Stage
+import models.Account
 import tornadofx.*
 
 class ClientList : View() {
@@ -17,5 +18,14 @@ class ClientList : View() {
         column("ID Number", Client::idProperty).makeEditable()
         columnResizePolicy = SmartResize.POLICY
         bindSelected(model)
+
+        rowExpander {
+            paddingLeft = expanderColumn.width
+            tableview(it.accounts) {
+                readonlyColumn("Client", Account::holderId)
+                readonlyColumn("Type",Account::type)
+                readonlyColumn("Balance",Account::balance)
+            }
+        }
     }
 }

@@ -12,13 +12,13 @@ class ClientEditor : View() {
         hboxConstraints { hGrow = Priority.ALWAYS }
         fieldset {
             field("First Name") {
-                textfield(model.firstName)
+                textfield(model.firstName).required()
             }
             field("Last Name") {
-                textfield(model.lastName)
+                textfield(model.lastName).required()
             }
             field("ID Number") {
-                textfield(model.id)
+                textfield(model.id).required()
             }
         }
         button("Save") {
