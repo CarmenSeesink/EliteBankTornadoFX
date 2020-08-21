@@ -58,9 +58,19 @@ class AccountView(val model: AccountViewModel): View(){
 
     fun accountCardColour(): Color {
         return when(model.type.value) {
-            "Gold Cheque" -> Color.DARKCYAN
+            "Gold Cheque" -> Color.ROYALBLUE
             "Diamond Cheque" -> Color.GRAY
             "Easy Access Savings" -> Color.WHITE
+            "Tax Free Savings" -> Color.BLACK
+            else -> Color.WHITE
+        }
+    }
+
+    fun accountCardBorderColour(): Color {
+        return when(model.type.value) {
+            "Gold Cheque" -> Color.ROYALBLUE
+            "Diamond Cheque" -> Color.GRAY
+            "Easy Access Savings" -> Color.LIGHTGRAY
             "Tax Free Savings" -> Color.BLACK
             else -> Color.WHITE
         }
@@ -90,40 +100,45 @@ class AccountView(val model: AccountViewModel): View(){
         setMaxSize(120.0, 170.0)
 
         rectangle {
-            stroke = Color.LIGHTGRAY
+            stroke = accountCardBorderColour()
             strokeWidth = 1.0
             arcHeight = 15.0
             arcWidth = 15.0
-            width = 170.0
-            height = 120.0
+            width = 130.0
+            height = 80.0
             style {
                 fill = accountCardColour()
             }
         }
 
-        label(accountCardLabel()) {
+        label("Elite Bank") {
             stackpaneConstraints {
                 alignment = Pos.TOP_LEFT
-                marginTop = 40.0
-                marginLeft = 20.0
+                marginTop = 45.0
+                marginLeft = 10.0
             }
             style {
-                fontWeight = FontWeight.EXTRA_BOLD
+                fontWeight = FontWeight.THIN
                 textFill = accountCardTextColour()
+                fontSize = 9.px
+                fontFamily = "Source Sans Pro"
             }
         }
 
-        label(model.balance) {
+        label(accountCardLabel()) {
             stackpaneConstraints {
                 alignment = Pos.BOTTOM_RIGHT
-                marginRight = 20.0
-                marginBottom = 40.0
+                marginBottom = 45.0
+                marginRight = 10.0
             }
             style {
-                fontWeight = FontWeight.EXTRA_BOLD
+                fontWeight = FontWeight.MEDIUM
                 textFill = accountCardTextColour()
+                fontSize = 12.px
+                fontFamily = "Source Sans Pro"
             }
         }
+
 
     }
 }
