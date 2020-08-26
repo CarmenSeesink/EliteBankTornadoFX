@@ -21,7 +21,6 @@
 * [Project Description](#project-description)
   * [Built with](#built-with)
 * [Getting Started](#getting-started)
-  * [Prerequisites](#prerequisites)
   * [How to install](#how-to-install)
 * [Features and Functionality](#features-and-functionality)
    * [Clients](#clients)
@@ -48,10 +47,6 @@ Banks are in need of a simple and effective banking system that will allow their
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
-
-### Prerequisites
-
-For development, the latest version of Visual Studio is required. The latest version can be downloaded from 
 
 ### How to install
  
