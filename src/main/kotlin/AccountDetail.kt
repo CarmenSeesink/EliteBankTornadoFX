@@ -2,6 +2,7 @@ import javafx.beans.property.SimpleFloatProperty
 import javafx.beans.property.SimpleStringProperty
 import tornadofx.*
 
+// Account Container
 class AccountDetailView: View("Client Details") {
     val accountList = mutableListOf(
         Account("Billy", "Tax Free Savings", 12.0f, 1),

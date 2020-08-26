@@ -2,6 +2,7 @@ import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 import tornadofx.*
 
+// Account Holder
 class AccountHolderView (val clientViewModel: ClientViewModel): View() {
 
     override val root =  hbox {
@@ -29,7 +30,6 @@ class AccountHolderView (val clientViewModel: ClientViewModel): View() {
                     }
                 }
                 label(clientViewModel.lastName.value) {
-//                        clientViewModel.lastName.value
                     useMaxWidth = true
                     style {
                         fontWeight = FontWeight.EXTRA_BOLD

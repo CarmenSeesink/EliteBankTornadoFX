@@ -50,9 +50,9 @@ class AccountViewModel(val account: Account): ViewModel() {
 
     fun applyTransactionFee(){
         if (freeTransactions.value <= 0 && type.value == "Gold Cheque") {
-            balance.value -= 5f
+            balance.value -= 15f
         } else if (freeTransactions.value <= 0 && type.value == "Diamond Cheque") {
-            balance.value -= 2f
+            balance.value -= 12f
         }
     }
 
@@ -67,8 +67,17 @@ class AccountViewModel(val account: Account): ViewModel() {
             balance.plus(balance * 1)
         }
     }
+
+    fun resetFreeTransactions(){
+        if (type.value == "Gold Cheque") {
+            freeTransactions.value = 10
+        } else if (type.value == "Diamond Cheque") {
+            freeTransactions.value = 30
+        }
+    }
 }
 
+// Account View
 class AccountView(val accountViewModel: AccountViewModel): View() {
 
     val depositAmount = SimpleFloatProperty()
@@ -222,7 +231,7 @@ class AccountView(val accountViewModel: AccountViewModel): View() {
                         }
                         label("R ${accountViewModel.balance.value}0") {
                             accountViewModel.balance.onChange {
-                                text = "R $it 0"
+                                text = "R ${it}0"
                             }
                             style {
                                 fontWeight = FontWeight.BOLD
@@ -231,12 +240,13 @@ class AccountView(val accountViewModel: AccountViewModel): View() {
                             }
                         }
                     }
-                    button("Add interest") {
+                    button("Close off") {
                         paddingAll = 10.0
-                        paddingLeft = 30.0
-                        paddingRight = 30.0
+                        paddingLeft = 35.0
+                        paddingRight = 35.0
                         action {
                             accountViewModel.applyInterest()
+                            accountViewModel.resetFreeTransactions()
                             println("Balance after Interest: ${accountViewModel.balance.value}")
                         }
                         style {

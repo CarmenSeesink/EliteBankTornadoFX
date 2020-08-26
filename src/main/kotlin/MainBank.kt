@@ -8,6 +8,7 @@ import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 import tornadofx.*
 
+// Main View with Client List
 class MainBank: View("ELITE BANK") {
 
 val clientList = mutableListOf(
@@ -21,24 +22,26 @@ val clientList = mutableListOf(
     val lastName = SimpleStringProperty()
     val idNumber = SimpleStringProperty()
     val img = SimpleStringProperty()
+    val input = SimpleStringProperty()
 
     override val root = scrollpane {
-            borderpane {
+        borderpane {
+            style {
+                backgroundColor += Color.WHITESMOKE
+            }
+            setPrefSize(1440.0, 960.0)
+            paddingAll = 40.0
+            top = label("ELITE BANK") {
+                useMaxWidth = true
                 style {
-                    backgroundColor += Color.WHITESMOKE
+                    fontWeight = FontWeight.EXTRA_BOLD
+                    fontSize = 12.px
+                    fontFamily = "Avenir"
                 }
-                setPrefSize(1440.0, 960.0)
-                paddingAll = 40.0
-                top = label("ELITE BANK") {
-                    useMaxWidth = true
-                    style {
-                        fontWeight = FontWeight.EXTRA_BOLD
-                        fontSize = 12.px
-                        fontFamily = "Avenir"
-                    }
-                }
-                left = vbox {
-                    paddingAll = 25.0
+            }
+            left = vbox {
+                paddingAll = 25.0
+                hbox {
                     label("OUR CLIENTS") {
                         useMaxWidth = true
                         style {
@@ -52,8 +55,82 @@ val clientList = mutableListOf(
                             marginBottom = 20.0
                         }
                     }
-                    vbox {
-                        spacing = 10.0
+                    form {
+                        hboxConstraints {
+                            marginLeft = 600.0
+
+                        }
+                        hbox {
+                            spacing = 20.0
+                            alignment = Pos.TOP_CENTER
+                            fieldset {
+                                field {
+                                    textfield(input) {
+                                        style {
+                                            fontFamily = "Avenir"
+                                            backgroundRadius += box(8.px)
+                                            borderColor += box(Color.WHITE)
+                                            borderRadius += box(8.px)
+                                            paddingAll = 10.0
+                                            backgroundColor = multi(Color.WHITE, Color.WHITE, Color.WHITE)
+                                            effect = DropShadow(2.0, Color.WHITESMOKE)
+                                        }
+                                    }
+                                }
+                            }
+                            button("Search") {
+                                hboxConstraints {
+//                                    marginLeft = 150.0
+                                    marginTop = 5.0
+                                }
+                                paddingAll = 10.0
+                                paddingLeft = 35.0
+                                paddingRight = 35.0
+                                action {
+                                }
+                                style {
+                                    fontWeight = FontWeight.NORMAL
+                                    textFill = Color.BLACK
+                                    fontSize = 12.px
+                                    borderWidth += box(1.5.px)
+                                    fontFamily = "Avenir"
+                                    backgroundRadius += box(8.px)
+                                    borderColor += box(Color.BLACK)
+                                    borderRadius += box(8.px)
+                                    backgroundColor = multi(Color.WHITE, Color.WHITE, Color.WHITE)
+                                }
+                            }
+                        }
+                    }
+                }
+                vbox {
+                    spacing = 10.0
+                    for (client in clientList) {
+                        hbox {
+                            spacing = 20.0
+                            alignment = Pos.CENTER
+                            add(ClientDetailView(ClientViewModel(client)))
+                            button("View Client Details") {
+                                paddingAll = 10.0
+                                paddingLeft = 30.0
+                                paddingRight = 30.0
+                                action {
+                                    replaceWith<ClientView>()
+                                }
+                                style {
+                                    fontWeight = FontWeight.NORMAL
+                                    textFill = Color.WHITE
+                                    fontSize = 12.px
+                                    fontFamily = "Avenir"
+                                    backgroundRadius += box(8.px)
+                                    backgroundColor = multi(Color.BLACK, Color.BLACK, Color.BLACK)
+                                }
+                            }
+                        }
+                    }
+                    clientList.onChange {
+                        // Clear View
+                        this.clear()
                         for (client in clientList) {
                             hbox {
                                 spacing = 20.0
@@ -77,180 +154,153 @@ val clientList = mutableListOf(
                                 }
                             }
                         }
-                        clientList.onChange {
-                            // Clear View
-                            this.clear()
-                            for (client in clientList) {
-                                hbox {
-                                    spacing = 20.0
-                                    alignment = Pos.CENTER
-                                    add(ClientDetailView(ClientViewModel(client)))
-                                    button("View Client Details") {
-                                        paddingAll = 10.0
-                                        paddingLeft = 30.0
-                                        paddingRight = 30.0
-                                        action {
-                                            replaceWith<ClientView>()
-                                        }
-                                        style {
-                                            fontWeight = FontWeight.NORMAL
-                                            textFill = Color.WHITE
-                                            fontSize = 12.px
-                                            fontFamily = "Avenir"
-                                            backgroundRadius += box(8.px)
-                                            backgroundColor = multi(Color.BLACK, Color.BLACK, Color.BLACK)
-                                        }
-                                    }
-                                }
+                    }
+                }
+                hbox {
+                    form {
+                        hboxConstraints {
+                            marginTop = 50.0
+                        }
+                        style {
+                            backgroundColor = multi(Color.WHITE, Color.WHITE, Color.WHITE)
+                            effect = DropShadow(2.0, Color.WHITESMOKE)
+                            borderColor += box(Color.WHITE)
+                            borderRadius += box(8.px)
+                            backgroundRadius += box(8.px)
+                            paddingAll = 25.0
+                            paddingRight = 40.0
+                            paddingLeft = 40.0
+                        }
+                        label("ADD NEW CLIENT") {
+                            useMaxWidth = true
+                            style {
+                                fontWeight = FontWeight.EXTRA_BOLD
+                                fontSize = 16.px
+                                textFill = Color.LIGHTGRAY
+                                fontFamily = "Avenir"
                             }
                         }
-                    }
-                    hbox{
-                        form {
-                            hboxConstraints {
-                                marginTop = 50.0
-                            }
-                            style {
-                                backgroundColor = multi(Color.WHITE, Color.WHITE, Color.WHITE)
-                                effect = DropShadow(2.0, Color.WHITESMOKE)
-                                borderColor += box(Color.WHITE)
-                                borderRadius += box(8.px)
-                                backgroundRadius += box(8.px)
-                                paddingAll = 25.0
-                                paddingRight = 40.0
-                                paddingLeft = 40.0
-                            }
-                            label("ADD NEW CLIENT") {
-                                useMaxWidth = true
+                        hbox(20) {
+                            fieldset {
                                 style {
-                                    fontWeight = FontWeight.EXTRA_BOLD
-                                    fontSize = 16.px
-                                    textFill = Color.LIGHTGRAY
+                                    fontWeight = FontWeight.SEMI_BOLD
+                                    fontSize = 14.px
                                     fontFamily = "Avenir"
                                 }
-                            }
-                            hbox(20) {
-                                fieldset {
-                                    style {
-                                        fontWeight = FontWeight.SEMI_BOLD
-                                        fontSize = 14.px
-                                        fontFamily = "Avenir"
-                                    }
-                                    hbox(20) {
-                                        vbox {
-                                            field("ID Number") {
-                                                textfield(id) {
-                                                    style {
-                                                        fontFamily = "Avenir"
-                                                        backgroundRadius += box(8.px)
-                                                        borderColor += box(Color.WHITESMOKE)
-                                                        borderRadius += box(8.px)
-                                                        paddingAll = 10.0
-                                                        backgroundColor =
-                                                            multi(Color.WHITESMOKE, Color.WHITESMOKE, Color.WHITESMOKE)
-                                                        effect = DropShadow(2.0, Color.WHITESMOKE)
-                                                    }
-                                                }
-                                            }
-                                            field("Client Title") {
-                                                textfield(clientTitle) {
-                                                    style {
-                                                        fontFamily = "Avenir"
-                                                        backgroundRadius += box(8.px)
-                                                        borderColor += box(Color.WHITESMOKE)
-                                                        borderRadius += box(8.px)
-                                                        paddingAll = 10.0
-                                                        backgroundColor =
-                                                            multi(Color.WHITESMOKE, Color.WHITESMOKE, Color.WHITESMOKE)
-                                                        effect = DropShadow(2.0, Color.WHITESMOKE)
-                                                    }
+                                hbox(20) {
+                                    vbox {
+                                        field("ID Number") {
+                                            textfield(idNumber) {
+                                                style {
+                                                    fontFamily = "Avenir"
+                                                    backgroundRadius += box(8.px)
+                                                    borderColor += box(Color.WHITESMOKE)
+                                                    borderRadius += box(8.px)
+                                                    paddingAll = 10.0
+                                                    backgroundColor =
+                                                        multi(Color.WHITESMOKE, Color.WHITESMOKE, Color.WHITESMOKE)
+                                                    effect = DropShadow(2.0, Color.WHITESMOKE)
                                                 }
                                             }
                                         }
-                                        vbox {
-                                            field("First Name") {
-                                                textfield(firstName) {
-                                                    style {
-                                                        fontFamily = "Avenir"
-                                                        backgroundRadius += box(8.px)
-                                                        borderColor += box(Color.WHITESMOKE)
-                                                        borderRadius += box(8.px)
-                                                        paddingAll = 10.0
-                                                        backgroundColor =
-                                                            multi(Color.WHITESMOKE, Color.WHITESMOKE, Color.WHITESMOKE)
-                                                        effect = DropShadow(2.0, Color.WHITESMOKE)
-                                                    }
+                                        field("Client Title") {
+                                            textfield(clientTitle) {
+                                                style {
+                                                    fontFamily = "Avenir"
+                                                    backgroundRadius += box(8.px)
+                                                    borderColor += box(Color.WHITESMOKE)
+                                                    borderRadius += box(8.px)
+                                                    paddingAll = 10.0
+                                                    backgroundColor =
+                                                        multi(Color.WHITESMOKE, Color.WHITESMOKE, Color.WHITESMOKE)
+                                                    effect = DropShadow(2.0, Color.WHITESMOKE)
                                                 }
                                             }
-                                            field("Last Name") {
-                                                textfield(lastName) {
-                                                    style {
-                                                        fontFamily = "Avenir"
-                                                        backgroundRadius += box(8.px)
-                                                        borderColor += box(Color.WHITESMOKE)
-                                                        borderRadius += box(8.px)
-                                                        paddingAll = 10.0
-                                                        backgroundColor =
-                                                            multi(Color.WHITESMOKE, Color.WHITESMOKE, Color.WHITESMOKE)
-                                                        effect = DropShadow(2.0, Color.WHITESMOKE)
-                                                    }
+                                        }
+                                    }
+                                    vbox {
+                                        field("First Name") {
+                                            textfield(firstName) {
+                                                style {
+                                                    fontFamily = "Avenir"
+                                                    backgroundRadius += box(8.px)
+                                                    borderColor += box(Color.WHITESMOKE)
+                                                    borderRadius += box(8.px)
+                                                    paddingAll = 10.0
+                                                    backgroundColor =
+                                                        multi(Color.WHITESMOKE, Color.WHITESMOKE, Color.WHITESMOKE)
+                                                    effect = DropShadow(2.0, Color.WHITESMOKE)
+                                                }
+                                            }
+                                        }
+                                        field("Last Name") {
+                                            textfield(lastName) {
+                                                style {
+                                                    fontFamily = "Avenir"
+                                                    backgroundRadius += box(8.px)
+                                                    borderColor += box(Color.WHITESMOKE)
+                                                    borderRadius += box(8.px)
+                                                    paddingAll = 10.0
+                                                    backgroundColor =
+                                                        multi(Color.WHITESMOKE, Color.WHITESMOKE, Color.WHITESMOKE)
+                                                    effect = DropShadow(2.0, Color.WHITESMOKE)
                                                 }
                                             }
                                         }
                                     }
                                 }
-                                fieldset {
-                                    style {
-                                        fontWeight = FontWeight.SEMI_BOLD
-                                        fontSize = 14.px
-                                        fontFamily = "Avenir"
-                                    }
-                                    hbox(20) {
-                                        vbox {
-                                            field("Profile Image") {
-                                                textfield(img) {
-                                                    style {
-                                                        fontFamily = "Avenir"
-                                                        backgroundRadius += box(8.px)
-                                                        borderColor += box(Color.WHITESMOKE)
-                                                        borderRadius += box(8.px)
-                                                        paddingAll = 10.0
-                                                        backgroundColor =
-                                                            multi(Color.WHITESMOKE, Color.WHITESMOKE, Color.WHITESMOKE)
-                                                        effect = DropShadow(2.0, Color.WHITESMOKE)
-                                                    }
-                                                }
-                                            }
-                                            button("Add Client") {
-                                                vboxConstraints {
-                                                    marginLeft = 150.0
-                                                    marginTop = 5.0
-                                                }
-                                                paddingAll = 10.0
-                                                paddingLeft = 35.0
-                                                paddingRight = 35.0
-                                                action {
-                                                    val newClient = Client(
-                                                        clientTitle.value,
-                                                        firstName.value,
-                                                        lastName.value,
-                                                        idNumber.value,
-                                                        observableListOf(Account("67890827", "Gold Cheque", 2000f, 30)),
-                                                        img.value
-                                                    )
-                                                    clientList.add(newClient)
-                                                    for (client in clientList) {
-                                                        println(client.firstNameProperty.value)
-                                                    }
-                                                }
+                            }
+                            fieldset {
+                                style {
+                                    fontWeight = FontWeight.SEMI_BOLD
+                                    fontSize = 14.px
+                                    fontFamily = "Avenir"
+                                }
+                                hbox(20) {
+                                    vbox {
+                                        field("Profile Image") {
+                                            textfield(img) {
                                                 style {
-                                                    fontWeight = FontWeight.NORMAL
-                                                    textFill = Color.WHITE
-                                                    fontSize = 12.px
                                                     fontFamily = "Avenir"
                                                     backgroundRadius += box(8.px)
-                                                    backgroundColor = multi(Color.BLACK, Color.BLACK, Color.BLACK)
+                                                    borderColor += box(Color.WHITESMOKE)
+                                                    borderRadius += box(8.px)
+                                                    paddingAll = 10.0
+                                                    backgroundColor =
+                                                        multi(Color.WHITESMOKE, Color.WHITESMOKE, Color.WHITESMOKE)
+                                                    effect = DropShadow(2.0, Color.WHITESMOKE)
                                                 }
+                                            }
+                                        }
+                                        button("Add Client") {
+                                            vboxConstraints {
+                                                marginLeft = 150.0
+                                                marginTop = 5.0
+                                            }
+                                            paddingAll = 10.0
+                                            paddingLeft = 35.0
+                                            paddingRight = 35.0
+                                            action {
+                                                val newClient = Client(
+                                                    clientTitle.value,
+                                                    firstName.value,
+                                                    lastName.value,
+                                                    idNumber.value,
+                                                    observableListOf(Account("67890827", "Gold Cheque", 2000f, 30)),
+                                                    img.value
+                                                )
+                                                clientList.add(newClient)
+                                                for (client in clientList) {
+                                                    println(client.firstNameProperty.value)
+                                                }
+                                            }
+                                            style {
+                                                fontWeight = FontWeight.NORMAL
+                                                textFill = Color.WHITE
+                                                fontSize = 12.px
+                                                fontFamily = "Avenir"
+                                                backgroundRadius += box(8.px)
+                                                backgroundColor = multi(Color.BLACK, Color.BLACK, Color.BLACK)
                                             }
                                         }
                                     }
@@ -258,63 +308,9 @@ val clientList = mutableListOf(
                             }
                         }
                     }
-
                 }
-
-//                    form {
-//                    fieldset("") {
-//                        style {
-//                            fontWeight = FontWeight.SEMI_BOLD
-//                            textFill = Color.BLACK
-//                            fontSize = 14.px
-//                            fontFamily = "Avenir"
-//                        }
-//                        label("ADD NEW CLIENT") {
-//                            useMaxWidth = true
-//                            style {
-//                                fontWeight = FontWeight.EXTRA_BOLD
-//                                fontSize = 16.px
-//                                textFill = Color.LIGHTGRAY
-//                                fontFamily = "Avenir"
-//                            }
-//                        }
-//                        field("Title") {
-//                            textfield(clientTitle)
-//                        }
-//                        field("First Name") {
-//                            textfield(firstName)
-//                        }
-//                        field("Last Name") {
-//                            textfield(lastName)
-//                        }
-//                        field("ID Number") {
-//                            textfield(idNumber)
-//                        }
-//                        field("Profile Image") {
-//                            textfield(img)
-//                        }
-//                        button("Add Client") {
-//                            paddingAll = 10.0
-//                            paddingLeft = 30.0
-//                            paddingRight = 30.0
-//                            action {
-//                                val newClient = Client(clientTitle.value, firstName.value, lastName.value, idNumber.value, observableListOf(Account("67890827", "Gold Cheque", 2000f, 30)), img.value)
-//                                clientList.add(newClient)
-//                                for (client in clientList) {
-//                                    println(client.firstNameProperty.value)
-//                                }
-//                            }
-//                            style {
-//                                fontWeight = FontWeight.NORMAL
-//                                textFill = Color.WHITE
-//                                fontSize = 12.px
-//                                fontFamily = "Avenir"
-//                                backgroundRadius += box(8.px)
-//                                backgroundColor = multi(Color.BLACK, Color.BLACK, Color.BLACK)
-//                            }
-//                        }
-//                    }
-//                }
             }
-}}
+        }
+    }
+}
 

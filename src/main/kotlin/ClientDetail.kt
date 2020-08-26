@@ -5,6 +5,7 @@ import javafx.scene.paint.Color
 import javafx.scene.text.FontWeight
 import tornadofx.*
 
+// Client Container for List
 class ClientDetailView(val clientViewModel: ClientViewModel): View() {
 
     val firstName = SimpleStringProperty()

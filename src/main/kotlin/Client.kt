@@ -27,17 +27,17 @@ class ClientViewModel(val client: Client): ViewModel(){
     val active = bind { client.active }
     val accounts = bind { client.accounts }
 
-// Search Function
-//    init {
-//        fun searchClient(firstName: String){
-//            for (client in clients) {
-//                if (client.getName().equals(firstName)) {
-//                    return client
-//                }
-//            }
-//            return null
-//        }
-//    }
+ //Search Function
+// fun searchClient(input: String): Client {
+//     for(client in clients) {
+//         if (input == firstName.value || input == id.value) {
+//             return client
+//         }
+//         else {
+//             println("No Clients")
+//         }
+//     }
+// }
 }
 
 // Client View
@@ -48,9 +48,9 @@ class ClientView: View("Elite Bank") {
     ).asObservable()
 
     val accountList = mutableListOf(
-        Account("893047890", "Tax Free Savings", 12.0f, 1),
-        Account("893047890", "Gold Cheque", 24.0f, 1),
-        Account("893047890", "Diamond Cheque", 24.0f, 2)
+        Account("893047890", "Gold Cheque", 15000.0f, 1),
+        Account("893047890", "Tax Free Savings", 35000.0f, 1),
+        Account("893047890", "Diamond Cheque", 30000.0f, 2)
     )
     val firstName = SimpleStringProperty()
 
